@@ -1,0 +1,43 @@
+{
+  "name": "urlshortner",
+  "version": "1.0.0",
+  "description": "A simple implementation of URL Shortner (just like bit.ly or goo.gl)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/me-ydv-5/urlShortner.git"
+  },
+  "keywords": [
+    "url",
+    "shortner",
+    "goo.gl",
+    "bit.ly"
+  ],
+  "author": "Sahil",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/me-ydv-5/urlShortner/issues"
+  },
+  "homepage": "https://github.com/me-ydv-5/urlShortner#readme",
+  "dependencies": {
+    "bottleneck": "^2.19.0",
+    "express": "^4.17.1",
+    "lru-cache": "^5.1.1",
+    "material-components-web": "^2.3.0",
+    "materialize-css": "^1.0.0-rc.2",
+    "nodemon": "^1.19.1",
+    "pg": "^7.11.0"
+  },
+  "devDependencies": {
+    "css-loader": "^2.1.1",
+    "extract-loader": "^3.1.0",
+    "file-loader": "^4.0.0",
+    "node-sass": "^4.12.0",
+    "sass-loader": "^7.1.0",
+    "webpack": "^3.12.0",
+    "webpack-dev-server": "^2.11.5"
+  }
+}
