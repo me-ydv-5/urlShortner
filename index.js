@@ -1,12 +1,10 @@
 const express = require('express')
 const app = express()
-// const server = require('http').Server(app);
-// const io = require('socket.io')(server);
 const port = 3000
 const Bottleneck = require('bottleneck')
 const crypto = require('crypto')
 const bodyParser = require('body-parser')
-
+const Ddos = require('ddos')
 // A max of 20 requests running at a time.
 // Wait at least 1000ms between each request.
 const limiter = new Bottleneck({
@@ -35,14 +33,12 @@ const client = new Client({
 app.listen(port, () => console.log(`Listening on port ${port}!`))
 client.connect()
 
-// server.listen(3000);
-// io.on('connection', function (socket) {
-//   	socket.emit('connected');
-// });
-
 /*--------------------------------------------------------------------------*/
 app.use( bodyParser.json() );
 app.use(express.static('public'))
+
+var ddos = new Ddos({limit: 4, burst:4});
+app.use(ddos.express)
 
 app.get('/', (req, res) => {
 	res.sendFile(path.join(__dirname + 'public/index.html'))
@@ -60,26 +56,16 @@ app.get('/list', (req, response)=>{
 
 app.post('/generate-short-url', (req, res) => {
 	var url = req.body.url
-	console.log("url is " + url)
 
 	var hash = crypto.createHash('md5').update(url).digest('hex');
 	hash = hash.substring(0, 6)
 
-	var qry = 'SELECT longurl FROM url where shorturl=$1;'
-	var val = [hash]
-	client.query(qry, val)
-		.then(response => {
-			if(response.rowCount == 0){
-				var query = 'INSERT INTO url VALUES ($1, $2, 0);'
-				var values = [hash, url]
-				client.query(query, values)
-					.then(() => {
-						res.json({'short-url': hash})
-					})
-					.catch(e => console.error(e.stack))
-			}else{
-				res.json({'short-url': hash})
-			}
+	var qry = 'INSERT INTO url VALUES ($1, $2, 0) ON CONFLICT (shorturl) DO NOTHING;'
+	var values = [hash, url]
+
+	client.query(qry, values)
+		.then((response) => {
+			res.json({'short-url': hash})
 		})
 		.catch(e => console.error(e.stack))
 })
@@ -97,6 +83,9 @@ app.get('/:shorturl', (req,res) => {
 		.then(response => {
 			if(response.rowCount == 1){
 				var longurl = response.rows[0]['longurl']
+				console.log("longurl " + longurl)
+				if(longurl.substring(0, 4) != "http")
+					longurl = "http://" + longurl
 				res.redirect(longurl)
 
 				var counterQuery = 'UPDATE url SET hitrate=hitrate+1 '
@@ -106,8 +95,7 @@ app.get('/:shorturl', (req,res) => {
 				  	if (err) {
 				    	console.log(err.stack)
 				  	} else {
-				  		// socket.emit('updateTable');
-				    	console.log(res.rows[0])
+				  		console.log("Updated the hitrate")
 				  	}
 				})
 			}else{
@@ -129,7 +117,6 @@ app.delete('/:shorturl', (req, res) => {
 			if(response.rowCount == 0){
 				res.sendStatus(404)
 			}else{
-				// socket.emit('updateTable');
 				res.send('Deleted!')
 			}
 		})
