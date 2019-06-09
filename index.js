@@ -1,5 +1,7 @@
 const express = require('express')
 const app = express()
+// const server = require('http').Server(app);
+// const io = require('socket.io')(server);
 const port = 3000
 const Bottleneck = require('bottleneck')
 const crypto = require('crypto')
@@ -29,8 +31,14 @@ const client = new Client({
 	database:'urlshortner',
 	password:'sahil'
 })
+
 app.listen(port, () => console.log(`Listening on port ${port}!`))
 client.connect()
+
+// server.listen(3000);
+// io.on('connection', function (socket) {
+//   	socket.emit('connected');
+// });
 
 /*--------------------------------------------------------------------------*/
 app.use( bodyParser.json() );
@@ -45,13 +53,15 @@ app.get('/list', (req, response)=>{
 	var query = 'SELECT * from url'
 	client.query(query)
   		.then(res => {
-  			response.josn(res.rows)
+  			response.json(res.rows)
   		})
   		.catch(e => console.error(e.stack))
 })
 
 app.post('/generate-short-url', (req, res) => {
 	var url = req.body.url
+	console.log("url is " + url)
+
 	var hash = crypto.createHash('md5').update(url).digest('hex');
 	hash = hash.substring(0, 6)
 
@@ -60,7 +70,7 @@ app.post('/generate-short-url', (req, res) => {
 	client.query(qry, val)
 		.then(response => {
 			if(response.rowCount == 0){
-				var query = 'INSERT INTO url VALUES ($1, $2, 1);'
+				var query = 'INSERT INTO url VALUES ($1, $2, 0);'
 				var values = [hash, url]
 				client.query(query, values)
 					.then(() => {
@@ -96,6 +106,7 @@ app.get('/:shorturl', (req,res) => {
 				  	if (err) {
 				    	console.log(err.stack)
 				  	} else {
+				  		// socket.emit('updateTable');
 				    	console.log(res.rows[0])
 				  	}
 				})
@@ -108,8 +119,9 @@ app.get('/:shorturl', (req,res) => {
 
 app.delete('/:shorturl', (req, res) => {
 	var shorturl = req.params['shorturl']
+	var values = [shorturl]
 
-	var query = 'DELETE FROM url where shorturl=$1;'
+	var query = 'DELETE FROM url WHERE shorturl=$1;'
 	var values = [shorturl]
 
 	client.query(query, values)
@@ -117,6 +129,7 @@ app.delete('/:shorturl', (req, res) => {
 			if(response.rowCount == 0){
 				res.sendStatus(404)
 			}else{
+				// socket.emit('updateTable');
 				res.send('Deleted!')
 			}
 		})

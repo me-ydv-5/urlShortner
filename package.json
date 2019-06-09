@@ -24,12 +24,15 @@
   "homepage": "https://github.com/me-ydv-5/urlShortner#readme",
   "dependencies": {
     "bottleneck": "^2.19.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "lru-cache": "^5.1.1",
     "material-components-web": "^2.3.0",
     "materialize-css": "^1.0.0-rc.2",
     "nodemon": "^1.19.1",
-    "pg": "^7.11.0"
+    "pg": "^7.11.0",
+    "socket.io": "^2.2.0",
+    "socket.io-client": "^2.2.0"
   },
   "devDependencies": {
     "css-loader": "^2.1.1",

@@ -13,22 +13,31 @@
 	padding-left: 100px;
 }
 .left_side {
-    word-wrap: break-word;
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 35%;
-  	background-color:#90caf9;
+	word-wrap: break-word;
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	width: 35%;
+	background-color:#90caf9;
 }
 
 .right_side {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    right: 70%; 
-  	/*background-color:blue;*/
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	right: 70%; 
+	/*background-color:blue;*/
+}
+
+
+#form{
+	display: flex; 
+	position: absolute; 
+	margin-top: 100px; 
+	margin-left: 150%; 
+	width: 650px
 }
 
 #style-1::-webkit-scrollbar-track
@@ -56,16 +65,16 @@
 }
 	
 .input-field label {
- 	color: black !important;
- 	padding-left: 0px;
+	color: black !important;
+	padding-left: 0px;
 }
 
 .input-field input[type=text]:focus + label, .materialize-textarea:focus:not([readonly]) + label {
- 	color: black !important;
- 	padding-left: 0px;
+	color: black !important;
+	padding-left: 0px;
 }
 
 .input-field input[type=text]:focus, .materialize-textarea:focus:not([readonly]) {
- 	border-bottom: 1px solid black !important;
- 	box-shadow: 0 1px 0 0 black !important;
+	border-bottom: 1px solid black !important;
+	box-shadow: 0 1px 0 0 black !important;
 }
