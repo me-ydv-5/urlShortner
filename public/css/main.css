@@ -1,0 +1,71 @@
+.vertical-menu {
+  height: 250px;
+  overflow-y: auto;
+  position: absolute; 
+  margin-top: 250px; 
+  margin-left: 150%; 
+  width: 650px
+}
+
+.centered{
+	background-color: #90caf9;
+  /*margin-left: 140%;*/
+	padding-left: 100px;
+}
+.left_side {
+    word-wrap: break-word;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 35%;
+  	background-color:#90caf9;
+}
+
+.right_side {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 70%; 
+  	/*background-color:blue;*/
+}
+
+#style-1::-webkit-scrollbar-track
+{
+	/*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);*/
+	border-radius: 3px;
+	background-color: #90caf9;
+}
+
+#style-1::-webkit-scrollbar
+{
+	width: 8px;
+	background-color: #90caf9;
+}
+
+#style-1::-webkit-scrollbar-thumb
+{
+	border-radius: 3px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #90caf9;
+}
+
+#button{
+	background-color: #90caf9;
+}
+	
+.input-field label {
+ 	color: black !important;
+ 	padding-left: 0px;
+}
+
+.input-field input[type=text]:focus + label, .materialize-textarea:focus:not([readonly]) + label {
+ 	color: black !important;
+ 	padding-left: 0px;
+}
+
+.input-field input[type=text]:focus, .materialize-textarea:focus:not([readonly]) {
+ 	border-bottom: 1px solid black !important;
+ 	box-shadow: 0 1px 0 0 black !important;
+}
