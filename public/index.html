@@ -3,9 +3,9 @@
 <head>
 	<title>URL Shortner</title>
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="stylesheets/materialize.min.css"  media="screen,projection"/>
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-      <link rel="stylesheet" href="css/main.css">
+      <link rel="stylesheet" href="stylesheets/main.css">
       <link rel="shortcut icon" type="image/png" href="/images/favicon.png"/>
 </head>
 
@@ -20,7 +20,7 @@
     	<form id="form" action="javascript:submitURL();">
 	    	<div class="row">
 	    	  	<div class="input-field col s12" style="width: 520px;">
-	    	    	<input id="url" type="text">
+	    	    	<input id="url" type="url" value="http://">
 	    	    	<label for="url">Enter long URL</label>
 	    	  	</div>
 	    	</div>
@@ -31,8 +31,8 @@
 				</button>
 				<script type="text/javascript">
 					function submitURL() {
-						argument = document.getElementById('url').value
-						console.log("argumentsent " + argument)
+						argument = document.getElementById('url').value;
+						console.log("argumentsent " + argument);
 						var init = {
 							method: 'POST',
 							headers: {
@@ -66,8 +66,8 @@
 	        	<tbody id = "tBody">
 
 				<script>
-				  	// window.onload = updateTable();
-				  	setInterval(updateTable(),10000);
+				  	window.onload = updateTable();
+				  	setInterval(updateTable,5000);
 				  	function updateTable() {
 						fetch('/list', {method: 'GET'})
 							.then(incomingData => incomingData.json())
@@ -75,23 +75,23 @@
 						  		incomingData.sort((a, b) => {
 						  			return a.hitrate > b.hitrate ? -1 : 1
 						  		})
-						  		console.log(incomingData)
+						  		// console.log(incomingData)
 
 						  		var table = document.getElementById("tBody");
 						  		table.innerHTML = "";
 						  		for (var i = 0; i <= incomingData.length - 1; i++) {
-						  			var data = incomingData[i]
+						  			var data = incomingData[i];
 
 						  			var row = table.insertRow(i);
 									var cell1 = row.insertCell(0);
 									var cell2 = row.insertCell(1);
 
-									var short = 	`<a href=${window.location.href}`
-													+`${data['shorturl']} `
-													+"target=\"_blank\">"
-													+`${data['shorturl']}</a>`
-									cell1.innerHTML = short
-									cell2.innerHTML = data['hitrate']
+									var short = `<a href=`
+												+`/${data['shorturl']} `
+												+"target=\"_blank\">"
+												+`${data['shorturl']}</a>`;
+									cell1.innerHTML = short;
+									cell2.innerHTML = data['hitrate'];
 						  		}
 						  	})
 						  	.catch(error => console.error(error));
@@ -102,6 +102,6 @@
 	  	</div>	
 	</div>
 
-<script type="text/javascript" src="js/materialize.min.js"></script>
+<script type="text/javascript" src="/javascripts/materialize.min.js"></script>
 </body>
 </html>
