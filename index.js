@@ -83,7 +83,7 @@ app.get('/:shorturl', (req,res) => {
 		.then(response => {
 			if(response.rowCount == 1){
 				var longurl = response.rows[0]['longurl']
-				console.log("longurl " + longurl)
+
 				if(longurl.substring(0, 4) != "http")
 					longurl = "http://" + longurl
 				res.redirect(longurl)

@@ -59,17 +59,32 @@
 	      	<table class="centered responsive-table" id="table">
 	        	<thead id="thead">
 	          		<tr>
-	              		<th>Shortened URL</th>
-	              		<th>Hit Rate</th>
+						<th>Shortened URL</th>
+						<th>Long URL</th>
+						<th>Hit Rate</th>
+						<th>
+							Delete
+						</th>
 	          		</tr>
 	        	</thead>
 	        	<tbody id = "tBody">
 
 				<script>
-				  	// window.onload = updateTable();
-				  	setInterval(updateTable(),10000);
+					window.onload = updateTable();
+
+					function delCall(data) {
+						fetch(data, {method: 'DELETE'})
+							.then(res => {
+								console.log("deleted the entry from frontend");
+								updateTable();
+							})
+							.catch(err => console.log(err));
+					}
+					
+				  	// setInterval("updateTable()",5000);
 				  	function updateTable() {
-						fetch('/list', {method: 'GET'})
+						console.log('Updating the table..')
+						fetch('/list')
 							.then(incomingData => incomingData.json())
 						  	.then(incomingData => {
 						  		incomingData.sort((a, b) => {
@@ -80,18 +95,31 @@
 						  		var table = document.getElementById("tBody");
 						  		table.innerHTML = "";
 						  		for (var i = 0; i <= incomingData.length - 1; i++) {
-						  			var data = incomingData[i]
+									var data = incomingData[i]['shorturl']
+									var url = incomingData[i]['longurl']
 
 						  			var row = table.insertRow(i);
 									var cell1 = row.insertCell(0);
 									var cell2 = row.insertCell(1);
+									var cell3 = row.insertCell(2);
+									var cell4 = row.insertCell(3);
 
-									var short = 	`<a href=${window.location.href}`
-													+`${data['shorturl']} `
+									var short = 	`<a href=/${data} `
 													+"target=\"_blank\">"
-													+`${data['shorturl']}</a>`
+													+`${data}</a>`
+									if(url.length > 20)
+										url = url.substring(0, 20) + "...";
 									cell1.innerHTML = short
-									cell2.innerHTML = data['hitrate']
+									cell2.innerHTML = url
+									cell3.innerHTML = incomingData[i]['hitrate']
+
+									var delCall = 
+									"<a href=\"#\" " +  
+									"onClick=\"jacascript:delCall(" + 
+									`'${data}'` + 
+									");\">" + 
+									"<i class=\"material-icons\">delete_forever</i></a>";
+									cell4.innerHTML = delCall;
 						  		}
 						  	})
 						  	.catch(error => console.error(error));
