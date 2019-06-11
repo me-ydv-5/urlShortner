@@ -11,13 +11,18 @@
 
 <body style="background-color: #b3e5fc;">
 
+	<!-- Left portion of the page -->
 	<div class="left_side">
 		<font size="+40" style="position: absolute; margin-top: 187px; margin-left: 2%">
 			goo.gl got shut down but we're still up! We ain't going gloomy anytime sooner.
 		</font>
-	</div>	
+	</div>
+
+	<!-- Right portion of the page contaiting table and input field -->
 	<div class="right_side">
     	<form id="form" action="javascript:submitURL();">
+
+			<!-- Long URL field -->
 	    	<div class="row">
 	    	  	<div class="input-field col s12" style="width: 520px;">
 	    	    	<input id="url" type="text">
@@ -30,6 +35,7 @@
 				Shorten it!
 				</button>
 				<script type="text/javascript">
+					// Takes the argument and sends it to backend
 					function submitURL() {
 						argument = document.getElementById('url').value
 						console.log("argumentsent " + argument)
@@ -41,6 +47,7 @@
 							body: JSON.stringify({'url': argument})
 						}
 
+						// Updates the table as soon as request completes
 						fetch('/generate-short-url', init)
 						  	.then(data => data.json())
 						  	.then(data => {
@@ -49,12 +56,11 @@
 						  	})
 						  	.catch(error => console.error(error));
 					}
-
 				</script>
 			</div>
 
     	</form>
-	        
+
 		<div class="vertical-menu" id="style-1">
 	      	<table class="centered responsive-table" id="table">
 	        	<thead id="thead">
@@ -70,8 +76,11 @@
 	        	<tbody id = "tBody">
 
 				<script>
+					// Updates the table once when the page loads
+					// and then after every 5 seconds
 					window.onload = updateTable();
 
+					// Deletes the entry from the table and updates it.
 					function delCall(data) {
 						fetch(data, {method: 'DELETE'})
 							.then(res => {
@@ -80,20 +89,33 @@
 							})
 							.catch(err => console.log(err));
 					}
-					
-				  	// setInterval("updateTable()",5000);
+
+					// We're updating this table periodically so that
+					// any changes through API call (not necessarily frontend)
+					// could be seen here.
+					setInterval("updateTable()",5000);
+					  
+					// Updates the table, in case something is added or deleted.
+					// And does it periodically as well.
 				  	function updateTable() {
-						console.log('Updating the table..')
+						console.log('Updating the table..');
+
+						// Fetches the list and updates with increasing number
+						// of hitrates of the links
 						fetch('/list')
 							.then(incomingData => incomingData.json())
 						  	.then(incomingData => {
+
 						  		incomingData.sort((a, b) => {
 						  			return a.hitrate > b.hitrate ? -1 : 1
-						  		})
-						  		console.log(incomingData)
+								})
 
 						  		var table = document.getElementById("tBody");
-						  		table.innerHTML = "";
+								table.innerHTML = "";
+								
+								// Inserts four elements in an entry.
+								// ShortURL and LongURL links,
+								// Their hitrates and delete links.
 						  		for (var i = 0; i <= incomingData.length - 1; i++) {
 									var data = incomingData[i]['shorturl']
 									var url = incomingData[i]['longurl']
