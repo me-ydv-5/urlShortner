@@ -20,7 +20,7 @@ The frontend has allows you to see current existing records, enter a new record 
 
 It also has a rate limiter, which allows a maximum of 20 requests per second overall and throttles them if the number exceeds.
 
-See the following GIF that I made to see how it looks in action:
+See the following GIF that I made to see how it looks in action and how the database gets changed everytime we change something:
 
 ![URL Shortner Example](demo.gif)
 
@@ -82,6 +82,7 @@ Note that USERNAME in the above commands is what you put your username as.
 
     $ git clone https://github.com/me-ydv-5/urlShortner
     $ cd urlShortner
+    $ git checkout master-1
     $ psql DATABASENAME < urlshortner
     $ npm install
 
