@@ -101,4 +101,4 @@ Go to `localhost:3000` and try out the app.
 
 If everthing goes well, you should be able to see the app frontend as well as send HTTP requests directly to the backend.
 
-**NOTE: If you have problems setting up the database, see [this](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04)**
+**NOTE: If you have problems setting up the postgresql, see [this](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-18-04)**
