@@ -16,7 +16,7 @@ The following endpoints are available
 
     GET /list   - Retieves the list of all the records in the database. A record consists of the original URL, its shortened version and its hitrate, i.e, number of times the link has been clicked.
  
-The frontend has allows you to see current existing records, enter a new record and see the hitrates of the URLs. Also, you can delete any record directly from the frontend.
+The frontend allows you to see current existing records, enter a new record and see the hitrates of the URLs. Also, you can delete any record directly from the frontend.
 
 It also has a rate limiter, which allows a maximum of 20 requests per second overall and throttles them if the number exceeds.
 
