@@ -86,7 +86,7 @@ Note that USERNAME in the above commands is what you put your username as.
     $ psql DATABASENAME < urlshortner
     $ npm install
 
-The last command imports the database from the dump.
+The last second command imports the database from the dump.
 
 
 ## Running the project
@@ -95,7 +95,7 @@ Run the project with  the following command:
 
     PGUSER='USERNAME' PGDATABASE='DATABASENAME' PGPASSWORD='USERPASSWORD' PGPORT='5432' nodemon index.js
 
-Where USERNAME is your username, DATABASENAME is the name of database you created in the above commands, USERPASSWORD is your account's password in postgres that you created.
+Where USERNAME is your username, DATABASENAME is the name of database you created in the above commands, USERPASSWORD is your account's password in postgres that you created. Note that the environment variable collection has not been done (using .env file) for the sake of convenience.
 
 Go to `localhost:3000` and try out the app.
 
