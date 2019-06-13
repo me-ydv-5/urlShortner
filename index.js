@@ -20,7 +20,7 @@ const { Pool, Client } = require('pg');
 const pool = new Pool({max: 20});
 
 
-app.listen(port, () => console.log(`Listening on port ${port}!`));
+app.listen(process.env.PORT || port, () => console.log(`Listening on port ${port}!`));
 
 /*--------------------------------------------------------------------------*/
 app.use( bodyParser.json() );
